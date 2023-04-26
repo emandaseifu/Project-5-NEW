@@ -1,12 +1,12 @@
 package prj5;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
+import java.io.File;
 import java.util.Scanner;
 
 /**
- * The Channel Reader class 
+ * The Channel Reader class
  *
  * @author Emanda Seifu
  * @author Shreyas Kunaparaju
@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class ChannelReader 
 {
     private DLList<Influencer> person;
+    private String filename;
 
     public ChannelReader(String influencerFileName)
         throws java.text.ParseException,
@@ -24,9 +25,10 @@ public class ChannelReader
 
     }
 
-    private DLList<Influencer> readDataFile(String fileName) throws
-    FileNotFoundException,
-    java.text.ParseException {
+
+    private DLList<Influencer> readDataFile(String fileName)
+        throws FileNotFoundException,
+        java.text.ParseException {
         person = new DLList<Influencer>();
         Scanner file = new Scanner(new File(fileName));
         int lineCount = 0;
@@ -36,7 +38,7 @@ public class ChannelReader
             Scanner currLine = new Scanner(read).useDelimiter(",");
             String tokens[] = new String[10];
             int tokenCount = 0;
-            
+
             Months months = Months.valueOf(tokens[0]);
             if (tokens[0].equals("Januarary")) {
                 months = Months.JANUARY;
@@ -47,7 +49,7 @@ public class ChannelReader
             else if (tokens[2].equals("March")) {
                 months = Months.MARCH;
             }
-            
+
             String name = String.valueOf(tokens[1]);
             String channel = String.valueOf(tokens[2]);
             String country = String.valueOf(tokens[3]);
@@ -57,25 +59,47 @@ public class ChannelReader
             int fw = Integer.valueOf(tokens[7]);
             int ct = Integer.valueOf(tokens[8]);
             int vw = Integer.valueOf(tokens[9]);
-            
+
             while (currLine.hasNext() && tokenCount < 10) {
                 tokens[tokenCount++] = currLine.next();
             }
             currLine.close();
-            
+
             if (tokenCount == 10) {
                 Influencer inf = new Influencer(months, tokens[1], tokens[2],
                     tokens[3], tokens[4], li, pt, fw, ct, vw);
             }
-            
+
             else {
                 throw new java.text.ParseException("parse exception", 1);
             }
-            
+
             lineCount++;
         }
 
         file.close();
         return person;
+    }
+
+    public DLList<String> getChannel()
+        throws FileNotFoundException,
+        ParseException {
+        DLList<String> channels = new DLList<>();
+        Scanner scanner = new Scanner(new File(filename));
+        scanner.nextLine(); // skip header row
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] tokens = line.split(",");
+
+            if (tokens.length != 3) {
+                throw new ParseException("Invalid input format", 0);
+            }
+
+            channels.add(tokens[0]);
+        }
+
+        scanner.close();
+        return channels;
     }
 }
