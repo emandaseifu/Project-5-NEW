@@ -7,6 +7,7 @@ import cs2.TextShape;
 import cs2.Window;
 import cs2.WindowSide;
 import java.awt.Color;
+import java.util.Scanner;
 
 /**
  * The GUI class
@@ -65,9 +66,7 @@ public class GUI {
 
         quarter = new Button("First Quarter (Jan - March)");
         this.window.addButton(quarter, WindowSide.SOUTH);
-
     }
-
 
     /**
      * 
@@ -76,12 +75,10 @@ public class GUI {
         System.exit(0);
     }
 
-
     /**
      * 
      */
     public void clickedNameSort(Shape shape) {
-
         if (nameSort == null) {
             TextShape text = new TextShape(0, 0, "Sort by Channel Name");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
@@ -92,7 +89,9 @@ public class GUI {
             window.addShape(text);
         }
         else {
-            int size = nextInt(50) + 50;
+            int minSize = 50;
+            int maxSize = 100;
+            int size = minSize + randomGenerator.nextInt(maxSize - minSize);
             int x = randomGenerator.nextInt(window.getGraphPanelWidth() - size);
             int y = randomGenerator.nextInt(window.getGraphPanelHeight()
                 - size);
@@ -102,10 +101,8 @@ public class GUI {
             window.addButton(quitButton, WindowSide.NORTH);
 
             currentShape = new CircleShape(x, y, size, Color.RED);
-
         }
     }
-
 
     /**
      * 
@@ -116,7 +113,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "Sort by Rate");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -129,7 +126,6 @@ public class GUI {
         }
     }
 
-
     /**
      * 
      */
@@ -139,7 +135,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "Traditional Engagement Rate");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -162,7 +158,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "Reach Engagement Rate");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -185,7 +181,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "January");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -208,7 +204,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "February");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -220,7 +216,6 @@ public class GUI {
             window.addShape(nextShape);
         }
     }
-
 
     /**
      * 
@@ -231,7 +226,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "March");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
@@ -244,7 +239,6 @@ public class GUI {
         }
     }
 
-
     /**
      * 
      */
@@ -254,7 +248,7 @@ public class GUI {
 
         Shape nextShape = bag.pick();
         if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "You Win!");
+            TextShape text = new TextShape(0, 0, "First Quarter (Jan - March)");
             int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
             int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
             text.setX(x);
