@@ -23,7 +23,7 @@ public class Window {
     
     public Window(ChannelReader reader) {
         gui = new GUI(reader);
-        window = new Window("Social Media Visualization");
+        this.window = new Window("Social Media Visualization");
         
         addButtons();
         addShapes();
