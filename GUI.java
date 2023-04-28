@@ -28,13 +28,13 @@ public class GUI {
     private Button mar;
     private Button quarter;
     private EngagementCalculator calculator;
-    private EngagementReader reader;
+    private ChannelReader reader;
 
     /**
      * 
      * @param calc
      */
-    public GUI(EngagementReader reader) {
+    public GUI(ChannelReader reader) {
         this.reader = reader;
         window = new Window("Social Media Visualization");
 
