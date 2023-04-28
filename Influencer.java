@@ -427,5 +427,27 @@ public class Influencer {
             return false;
         }
     }
+    /**
+     * This method sorts the channels in the array by name first, and then engagement
+     */
+    Public void sortChannels()
+{
+for (int i = 0; i < myArray.length - 1; i++) {
+        for (int j = i + 1; j < myArray.length; j++) {
+            if (myArray[i].getChannelName().compareTo(myArray[j].getChannelName()) > 0) {
+                Channel temp = myArray[i];
+                myArray[i] = myArray[j];
+                myArray[j] = temp;
+            }
+           else if (myArray[i].getChannelName().compareTo(myArray[j].getChannelName()) == 0) {
+                if (myArray[i].getEngagement() < myArray[j].getEngagement()) {
+                    Channel temp = myArray[i];
+                    myArray[i] = myArray[j];
+                    myArray[j] = temp;
+                }
+            }
+        }
+    }
+}
 
 }
