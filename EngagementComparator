@@ -1,0 +1,32 @@
+/**
+ * 
+ */
+package prj5;
+
+import java.util.Comparator;
+
+/**
+ * @author Shreyas Kunaparaju
+ * @author Arnav Sharma
+ * @author Emanda Seifu
+ * @version 4/29/2023
+ */
+public class EngagementComparator {
+    public class EngagementRateComparator
+        implements Comparator<EngagementCalculator> {
+        public int compare(EngagementCalculator ec1, EngagementCalculator ec2) {
+            double rate1 = ec1.getEngagementRate();
+            double rate2 = ec2.getEngagementRate();
+            if (rate1 > rate2) {
+                return 1;
+            }
+            else if (rate1 < rate2) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
+}
