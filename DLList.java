@@ -1,5 +1,6 @@
 package prj5;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -11,9 +12,8 @@ import java.util.NoSuchElementException;
  * @author Arnav Sharma
  * @version 4/20/2023
  * @param <E>
- *           The type of object the class will store
+ *            The type of object the class will store
  */
-
 
 public class DLList<E> {
 
@@ -42,6 +42,7 @@ public class DLList<E> {
             data = d;
         }
 
+
         /**
          * Sets the node after this node
          *
@@ -51,6 +52,7 @@ public class DLList<E> {
         public void setNext(Node<E> n) {
             next = n;
         }
+
 
         /**
          * Sets the node before this one
@@ -62,6 +64,7 @@ public class DLList<E> {
             previous = n;
         }
 
+
         /**
          * Gets the next node
          *
@@ -71,6 +74,7 @@ public class DLList<E> {
             return next;
         }
 
+
         /**
          * Gets the node before this one
          *
@@ -79,6 +83,7 @@ public class DLList<E> {
         public Node<E> previous() {
             return previous;
         }
+
 
         /**
          * Gets the data in the node
@@ -114,6 +119,7 @@ public class DLList<E> {
         init();
     }
 
+
     /**
      * Initializes the object to have the head and tail nodes
      */
@@ -125,6 +131,7 @@ public class DLList<E> {
         size = 0;
     }
 
+
     /**
      * Checks if the array is empty
      *
@@ -133,6 +140,7 @@ public class DLList<E> {
     public boolean isEmpty() {
         return size == 0;
     }
+
 
     /**
      * Gets the number of elements in the list
@@ -143,12 +151,14 @@ public class DLList<E> {
         return size;
     }
 
+
     /**
      * Removes all of the elements from the list
      */
     public void clear() {
         init();
     }
+
 
     /**
      * Checks if the list contains the given object
@@ -160,6 +170,7 @@ public class DLList<E> {
     public boolean contains(E obj) {
         return lastIndexOf(obj) != -1;
     }
+
 
     /**
      * Gets the object at the given position
@@ -174,6 +185,7 @@ public class DLList<E> {
         return getNodeAtIndex(index).getData();
     }
 
+
     /**
      * Adds a element to the end of the list
      *
@@ -183,6 +195,7 @@ public class DLList<E> {
     public void add(E newEntry) {
         add(size(), newEntry);
     }
+
 
     /**
      * Adds the object to the position in the list
@@ -202,13 +215,13 @@ public class DLList<E> {
         }
         if (obj == null) {
             throw new IllegalArgumentException("Cannot add null "
-                    + "objects to a list");
+                + "objects to a list");
         }
 
         Node<E> nodeAfter;
         if (index == size) {
             nodeAfter = tail;
-        } 
+        }
         else {
             nodeAfter = getNodeAtIndex(index);
         }
@@ -222,6 +235,7 @@ public class DLList<E> {
 
     }
 
+
     /**
      * gets the node at that index
      * 
@@ -230,8 +244,8 @@ public class DLList<E> {
      */
     private Node<E> getNodeAtIndex(int index) {
         if (index < 0 || size() <= index) {
-            throw new IndexOutOfBoundsException("No element exists at " 
-                    + index);
+            throw new IndexOutOfBoundsException("No element exists at "
+                + index);
         }
         Node<E> current = head.next(); // as we have a sentinel node
         for (int i = 0; i < index; i++) {
@@ -239,6 +253,7 @@ public class DLList<E> {
         }
         return current;
     }
+
 
     /**
      * Gets the last time the given object is in the list
@@ -259,8 +274,9 @@ public class DLList<E> {
             }
             current = current.previous();
         }
-        return -1;  //if we do not find it
+        return -1; // if we do not find it
     }
+
 
     /**
      * Removes the element at the specified index from the list
@@ -278,6 +294,7 @@ public class DLList<E> {
         size--;
         return true;
     }
+
 
     /**
      * Removes the first object in the list that .equals(obj)
@@ -301,6 +318,49 @@ public class DLList<E> {
         return false;
     }
 
+
+    /**
+     * helper method for the insertion sort
+     * 
+     * @param node
+     *            is the node needed for comparing
+     * @param comparator
+     *            is the comparator type
+     */
+    private void orderInsert(Node<E> node, Comparator<E> comparator) {
+        Node<E> curr = head;
+        Node<E> prev = null;
+        while (curr != null && comparator.compare(node.getData(), curr
+            .getData()) > 0) {
+            prev = curr;
+            curr = curr.next();
+        }
+        if (prev != null) {
+            prev.setNext(node);
+            node.setNext(curr);
+        }
+        else {
+            node.setNext(head);
+            head = node;
+        }
+    }
+
+
+    public void insertionSort(Comparator<E> comp) {
+        if (size > 1) {
+            Node<E> unsort = head.next();
+            Node<E> sort = head.next();
+            sort.setNext(null);
+            while (unsort != null) {
+                Node<E> insert = unsort;
+                unsort = unsort.next();
+                this.orderInsert(insert, comp);
+            }
+
+        }
+    }
+
+
     /**
      * Returns a string representation of the list If a list contains A, B, and
      * C, the following should be returned "{A, B, C}" (Without the quotations)
@@ -317,7 +377,7 @@ public class DLList<E> {
                 builder.append(element.toString());
                 if (currNode.next != tail) {
                     builder.append(", ");
-                }  
+                }
                 currNode = currNode.next();
             }
         }
@@ -325,6 +385,8 @@ public class DLList<E> {
         builder.append("}");
         return builder.toString();
     }
+
+
     /**
      * 
      * Iterator method
@@ -334,17 +396,19 @@ public class DLList<E> {
     public Iterator<E> iterator() {
         return new DLListIterator<E>();
     }
-    
+
     /**
      * @author Emanda Seifu
-     * @version 04.01.2023
+     * @author Shreyas Kunaparaju
+     * @version 04.29.2023
      *
      * @param <A>
      */
     private class DLListIterator<A> implements Iterator<E> {
-        
+
         private Node<E> next;
         private boolean calledNext;
+
         /**
          * Creates a new DLListIterator
          */
@@ -352,6 +416,8 @@ public class DLList<E> {
             next = head.next().next();
             calledNext = false;
         }
+
+
         /**
          * Checks if there are more elements in the list
          *
@@ -361,11 +427,14 @@ public class DLList<E> {
         public boolean hasNext() {
             return next != null;
         }
+
+
         /**
          * Gets the next value in the list
          *
          * @return the next value
-         * @throws NoSuchElementException if there are no nodes left in the list
+         * @throws NoSuchElementException
+         *             if there are no nodes left in the list
          */
         @Override
         public E next() {
@@ -377,5 +446,22 @@ public class DLList<E> {
             calledNext = true;
             return value;
         }
+    }
+
+    /**
+     * get a particular node given the index value
+     * 
+     * @param i
+     * @return
+     */
+    public E getValueAt(int index) {
+        // TODO Auto-generated method stub
+        return getNodeAtIndex(index).getData();
+    }
+
+
+    public int getLength() {
+        // TODO Auto-generated method stub
+        return size;
     }
 }
