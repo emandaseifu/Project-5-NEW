@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package prj5;
+
+import java.util.Comparator;
+
+/**
+ * @author Shreyas Kunaparaju
+ * @author Arnav Sharma
+ * @author Emanda Seifu
+ * @version 4/29/2023
+ *
+ */
+public class ChannelNameComparator implements Comparator<Influencer> {
+    @Override
+    public int compare(Influencer o1, Influencer o2) {
+        return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+    }
+}
