@@ -115,7 +115,7 @@ public class GUI {
             1000000, 1000000, 10000000, 10000));
         list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
             1000000, 1000000, 10000000, 10000));
-        drawShapes(list);
+        this.drawShapes(list);
     }
 
 
@@ -123,6 +123,14 @@ public class GUI {
      * uses the insertion comparator to filter through the channel names
      */
     public void clickedChannelName(Button nameSort) {
+        DLList<Influencer> listJan = new DLList<Influencer>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getMonths() == Months.JANUARY) {
+                Influencer atI = list.getValueAt(i);
+                listJan.add(atI);
+            }
+
+        }
         list.insertionSort(new ChannelNameComparator());
         this.drawShapes(list);
 
