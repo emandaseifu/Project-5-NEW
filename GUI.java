@@ -78,28 +78,31 @@ public class GUI {
     /**
      * 
      */
-public void clickedNameSort(Shape shape) {
-    if (nameSort == null) {
-        TextShape text = new TextShape(0, 0, "Sort by Channel Name");
-        int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-        int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-        text.setX(x);
-        text.setY(y);
+    public void clickedNameSort(Shape shape) {
+        if (nameSort == null) {
+            TextShape text = new TextShape(0, 0, "Sort by Channel Name");
+            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
+            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
+            text.setX(x);
+            text.setY(y);
 
-        window.addShape(text);
-    } else {
-        int size = 50 + (int) (Math.random() * 50); // random integer between 50 and 100
-        int x = randomGenerator.nextInt(window.getGraphPanelWidth() - size);
-        int y = randomGenerator.nextInt(window.getGraphPanelHeight() - size);
-        nameSort = new Shape(x, y, size, Color.GRAY);
+            window.addShape(text);
+        }
+        else {
+            int minSize = 50;
+            int maxSize = 100;
+            int size = minSize + randomGenerator.nextInt(maxSize - minSize);
+            int x = randomGenerator.nextInt(window.getGraphPanelWidth() - size);
+            int y = randomGenerator.nextInt(window.getGraphPanelHeight()
+                - size);
+            nameSort = new Shape(x, y, size, Color.GRAY);
 
-        nameSort.onClick(this, "clickedQuit");
-        window.addButton(quitButton, WindowSide.NORTH);
+            nameSort.onClick(this, "clickedQuit");
+            window.addButton(quitButton, WindowSide.NORTH);
 
-        currentShape = new CircleShape(x, y, size, Color.RED);
+            currentShape = new CircleShape(x, y, size, Color.RED);
+        }
     }
-}
-
 
     /**
      * 
@@ -122,7 +125,8 @@ public void clickedNameSort(Shape shape) {
             window.addShape(nextShape);
         }
     }
-
+    
+    
     /**
      * 
      */
