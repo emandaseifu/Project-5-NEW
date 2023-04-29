@@ -46,6 +46,7 @@ public class Influencer {
      */
     @SuppressWarnings("rawtypes")
     private Statistics[] myArray;
+    private Months months;
 
     /**
      * Creates the Influencer objects
@@ -82,6 +83,7 @@ public class Influencer {
         int fw,
         int ct,
         int vw) {
+        this.months = months;
         this.name = name;
         this.channel = channel;
         this.country = country;
@@ -92,7 +94,9 @@ public class Influencer {
 
     }
 
-
+    public Months getMonths() {
+        return months;
+    }
     /**
      * @return name
      *         retrieves the name
