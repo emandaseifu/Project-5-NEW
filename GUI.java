@@ -2,12 +2,15 @@ package prj5;
 
 import cs2.Button;
 import cs2.CircleShape;
+import cs2.Command;
 import cs2.Shape;
 import cs2.TextShape;
 import cs2.Window;
 import cs2.WindowSide;
 import java.awt.Color;
+import java.util.Comparator;
 import java.util.Scanner;
+import acm.util.RandomGenerator;
 
 /**
  * The GUI class
@@ -30,10 +33,16 @@ public class GUI {
     private Button quarter;
     private EngagementCalculator calculator;
     private ChannelReader reader;
+    private RandomGenerator randomGenerator;
+    private Influencer influencer;
+    private DLList<Influencer> list;
 
     /**
+     * This is the GUI class for the project which handles the buttons and other
+     * things
      * 
-     * @param calc
+     * @param reader
+     *            is the reader for the channel
      */
     public GUI(ChannelReader reader) {
         this.reader = reader;
@@ -66,199 +75,91 @@ public class GUI {
 
         quarter = new Button("First Quarter (Jan - March)");
         this.window.addButton(quarter, WindowSide.SOUTH);
+        randomGenerator = new RandomGenerator();
+
+        DLList<Influencer> list = new DLList<Influencer>();
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        drawShapes(list);
+        influencer = new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000);
     }
+
 
     /**
      * 
      */
+
     public void clickedQuit(Button button) {
         System.exit(0);
     }
 
-    /**
-     * 
-     */
-    public void clickedNameSort(Shape shape) {
-        if (nameSort == null) {
-            TextShape text = new TextShape(0, 0, "Sort by Channel Name");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            int minSize = 50;
-            int maxSize = 100;
-            int size = minSize + randomGenerator.nextInt(maxSize - minSize);
-            int x = randomGenerator.nextInt(window.getGraphPanelWidth() - size);
-            int y = randomGenerator.nextInt(window.getGraphPanelHeight()
-                - size);
-            nameSort = new Shape(x, y, size, Color.GRAY);
-
-            nameSort.onClick(this, "clickedQuit");
-            window.addButton(quitButton, WindowSide.NORTH);
-
-            currentShape = new CircleShape(x, y, size, Color.RED);
-        }
-    }
 
     /**
      * 
      */
-    public void clickedRateSort() {
-        window.removeShape(shape);
-        bag.remove(shape);
+    public void clickedNameSort(Button button) {
 
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "Sort by Rate");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
-    }
-    
-    
-    /**
-     * 
-     */
-    public void clickedTraditional() {
-        window.removeShape(shape);
-        bag.remove(shape);
-
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "Traditional Engagement Rate");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
+        DLList<Influencer> list = new DLList<Influencer>();
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
+            1000000, 1000000, 10000000, 10000));
+        drawShapes(list);
     }
 
 
     /**
-     * 
+     * uses the insertion comparator to filter through the channel names
      */
-    public void clickedReach() {
-        window.removeShape(shape);
-        bag.remove(shape);
+    public void clickedChannelName(Button nameSort) {
+        list.insertionSort(new ChannelNameComparator());
+        this.drawShapes(list);
 
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "Reach Engagement Rate");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
     }
 
 
     /**
-     * 
+     * uses the insertion comparator to filter through the engagement calculator
+     * values
      */
-    public void clickedJan() {
-        window.removeShape(shape);
-        bag.remove(shape);
-
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "January");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
+    public void clickedTraditional(Button btn) {
+        list.insertionSort((Comparator<Influencer>)new EngagementComparator());
+        this.drawShapes(list);
     }
 
 
     /**
+     * draw shapes
+     * make
      * 
+     * @return
      */
-    public void clickedFeb() {
-        window.removeShape(shape);
-        bag.remove(shape);
+    public void drawShapes(DLList<Influencer> list) {
+        window.removeAllShapes();
+        Shape[] bars = new Shape[list.size()];
+        TextShape[] textShapes1 = new TextShape[list.size()];
+        TextShape[] textShapes2 = new TextShape[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            bars[i] = new Shape(50 * (i + 1), 100, 10, 100, Color.RED);
+            textShapes1[i] = new TextShape(50 * (i + 1), bars[i].getY()
+                + bars[i].getHeight() + 20, "a");
+            textShapes2[i] = new TextShape(50 * (i + 1), textShapes1[i].getY()
+                + textShapes1[i].getHeight() + 20, "b");
 
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "February");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
-    }
-
-    /**
-     * 
-     */
-    public void clickedMar() {
-        window.removeShape(shape);
-        bag.remove(shape);
-
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "March");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
-        }
-    }
-
-    /**
-     * 
-     */
-    public void clickedQuarter() {
-        window.removeShape(shape);
-        bag.remove(shape);
-
-        Shape nextShape = bag.pick();
-        if (nextShape == null) {
-            TextShape text = new TextShape(0, 0, "First Quarter (Jan - March)");
-            int x = window.getGraphPanelWidth() / 2 - text.getWidth() / 2;
-            int y = window.getGraphPanelHeight() / 2 - text.getHeight() / 2;
-            text.setX(x);
-            text.setY(y);
-
-            window.addShape(text);
-        }
-        else {
-            window.addShape(nextShape);
+            window.addShape(bars[i]);
+            window.addShape(textShapes1[i]);
+            window.addShape(textShapes2[i]);
         }
     }
 }
