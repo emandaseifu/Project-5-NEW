@@ -95,7 +95,7 @@ public class GUI {
 
 
     /**
-     * 
+     * this method acts as the quit function for the terminal 
      */
 
     public void clickedQuit(Button button) {
@@ -104,7 +104,8 @@ public class GUI {
 
 
     /**
-     * 
+     * this method acts as  the sort by username method 
+     * @button as a button 
      */
     public void clickedNameSort(Button button) {
 
@@ -121,6 +122,7 @@ public class GUI {
 
     /**
      * uses the insertion comparator to filter through the channel names
+     * @param nameSort as a button 
      */
     public void clickedChannelName(Button nameSort) {
         DLList<Influencer> listJan = new DLList<Influencer>();
@@ -140,6 +142,7 @@ public class GUI {
     /**
      * uses the insertion comparator to filter through the engagement calculator
      * values
+     * @param btn as a button 
      */
     public void clickedTraditional(Button btn) {
         list.insertionSort((Comparator<Influencer>)new EngagementComparator());
@@ -149,7 +152,7 @@ public class GUI {
 
     /**
      * draw shapes
-     * make
+     * @param list as a DLList
      * 
      * @return
      */
