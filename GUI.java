@@ -8,6 +8,7 @@ import cs2.TextShape;
 import cs2.Window;
 import cs2.WindowSide;
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.Scanner;
 import acm.util.RandomGenerator;
@@ -36,6 +37,7 @@ public class GUI {
     private RandomGenerator randomGenerator;
     private Influencer influencer;
     private DLList<Influencer> list;
+    private final int MAX_BAR_HEIGHT = 100;
 
     /**
      * This is the GUI class for the project which handles the buttons and other
@@ -106,18 +108,16 @@ public class GUI {
      */
     public void clickedNameSort(Button button) {
 
-        DLList<Influencer> list = new DLList<Influencer>();
-        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
-            1000000, 1000000, 10000000, 10000));
-        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
-            1000000, 1000000, 10000000, 10000));
-        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
-            1000000, 1000000, 10000000, 10000));
-        list.add(new Influencer(Months.JANUARY, "A", "A", "A", "A", 1000000,
-            1000000, 1000000, 10000000, 10000));
-        this.drawShapes(list);
-    }
+        try {
+            ChannelReader reader = new ChannelReader("SampleInput1_2022.csv");
+            DLList<Influencer> list = reader.getInfluencers();
+            this.drawShapes(list);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
 
+    }
+ 
 
     /**
      * uses the insertion comparator to filter through the channel names
@@ -158,16 +158,32 @@ public class GUI {
         Shape[] bars = new Shape[list.size()];
         TextShape[] textShapes1 = new TextShape[list.size()];
         TextShape[] textShapes2 = new TextShape[list.size()];
+        double maxEngagementRate = getMaxEngagementRate(list);
+
         for (int i = 0; i < list.size(); i++) {
-            bars[i] = new Shape(50 * (i + 1), 100, 10, 100, Color.RED);
+            double scaledEngagementRate = list.get(i).getEngagementRate() / maxEngagementRate;
+            int barHeight = (int) (scaledEngagementRate * MAX_BAR_HEIGHT);
+
+            bars[i] = new Shape(50 * (i + 1), 100 + MAX_BAR_HEIGHT - barHeight, 10, barHeight, Color.RED);
             textShapes1[i] = new TextShape(50 * (i + 1), bars[i].getY()
-                + bars[i].getHeight() + 20, "a");
+                + bars[i].getHeight() + 20, list.get(i).getChannel());
             textShapes2[i] = new TextShape(50 * (i + 1), textShapes1[i].getY()
-                + textShapes1[i].getHeight() + 20, "b");
+                + textShapes1[i].getHeight() + 20, Double.toString(list.get(i).getEngagementRate()));
 
             window.addShape(bars[i]);
             window.addShape(textShapes1[i]);
             window.addShape(textShapes2[i]);
         }
+    }
+
+    private double getMaxEngagementRate(DLList<Influencer> list) {
+        double maxEngagementRate = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Influencer influencer = list.get(i);
+            if (influencer.getEngagementRate() > maxEngagementRate) {
+                maxEngagementRate = influencer.getEngagementRate();
+            }
+        }
+        return maxEngagementRate;
     }
 }
