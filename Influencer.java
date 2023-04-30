@@ -47,6 +47,7 @@ public class Influencer {
     @SuppressWarnings("rawtypes")
     private Statistics[] myArray;
     private Months months;
+    private EngagementCalculator ec;
 
     /**
      * Creates the Influencer objects
@@ -91,6 +92,7 @@ public class Influencer {
 
         myArray = new Statistics[3];
         myArray[0] = new Statistics(months, li, pt, fw, ct, vw);
+        ec = new EngagementCalculator(myArray[0]);
 
     }
 
@@ -453,5 +455,8 @@ public class Influencer {
          * return sb.toString();
          */
     }
-
+    public double getEngagementRate()
+    {
+        return ec.getEngagementRate();
+    }
 }
