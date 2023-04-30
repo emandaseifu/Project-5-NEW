@@ -105,7 +105,7 @@ public class GUI {
 
     /**
      * this method acts as  the sort by username method 
-     * @button as a button 
+     * @param button as a button 
      */
     public void clickedNameSort(Button button) {
 
