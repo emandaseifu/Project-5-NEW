@@ -1,4 +1,3 @@
-
 package prj5;
 
 import java.io.FileNotFoundException;
@@ -30,7 +29,7 @@ public class Input {
                 System.out.println(channelView.get(i));
             }
             GUI gui = new GUI(reader);
+            gui.drawShapes(channelView);
         }
     }
-
 }
