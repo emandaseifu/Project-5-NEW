@@ -1,11 +1,5 @@
 package prj5;
 
-// import java.text.DecimalFormat;
-// import list.AList;
-// import prj5.ChannelReader;
-// import prj5.Influencer;
-// import prj5.Statistics;
-
 /**
  * The Engagement Calculator class
  *
@@ -115,7 +109,8 @@ public class EngagementCalculator {
     /**
      * Gets the total number of views for the given statistics.
      * 
-     * @param stats The statistics object to get views from
+     * @param stats
+     *            The statistics object to get views from
      * @return The total number of views
      */
     public int getReach(Statistics stats) {
