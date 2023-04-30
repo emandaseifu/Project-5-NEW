@@ -48,7 +48,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the number of likes.
+     * Returns number of likes.
      *
      * @return the number of likes
      */
@@ -58,7 +58,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the number of posts.
+     * Returns number of posts.
      *
      * @return the number of posts
      */
@@ -68,7 +68,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the number of followers.
+     * Returns number of followers.
      *
      * @return the number of followers
      */
@@ -78,7 +78,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the number of comments.
+     * Returns number of comments.
      *
      * @return the number of comments
      */
@@ -88,7 +88,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the number of views.
+     * Returns number of views.
      *
      * @return the number of views
      */
@@ -98,7 +98,7 @@ public class Statistics implements Comparable<Statistics> {
 
 
     /**
-     * Returns the month associated with these statistics.
+     * Returns month associated with these statistics.
      *
      * @return the month associated with these statistics
      */
